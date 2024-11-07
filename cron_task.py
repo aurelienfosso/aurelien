@@ -53,8 +53,8 @@ def surveiller_pages():
                 aucune_session = soup.find("span", class_="text text-danger")
                 if aucun_examen:
                     message = f"{nom_examen} à {ville} : {aucun_examen.text.strip()}"
-                elif titre.text == '(Cette session est complète)':
-                    message = f"💡{nom_examen} à {ville} : {titre.text.strip()}"
+                elif aucune_session.text == '(Cette session est complète)':
+                    message = f"💡Fausse alert: {nom_examen} à {ville} : {aucune_session.text.strip()}"
                     envoyer_notification(message)
                 else:
                     message = f"🍀🎉{nom_examen} à {ville} : un examen programmer : {url}"
