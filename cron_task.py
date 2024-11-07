@@ -45,7 +45,7 @@ def surveiller_pages():
             soup = obtenir_page(url)
             contenu = soup.text
             hash_actuel = hashlib.md5(contenu.encode('utf-8')).hexdigest()
-            
+            envoyer_notification(f"scrapping")
             if derniers_hashes[url] is None:
                 derniers_hashes[url] = hash_actuel
                 envoyer_notification(f"Surveillance activée pour {nom_examen} à {ville}.")
