@@ -21,7 +21,7 @@ url_yaounde = [
    
     ['TCF-IRN', 'https://yaounde.ifc-tests-examens.com/examens-session/12-test-de-connaissance-de-franais-pour-intgration-rsidence-et-nationalit'],
     ['TEF IRN', 'https://yaounde.ifc-tests-examens.com/examens-session/7-test-d-evaluation-de-franais-intgration-rsidence-nationalit'],
-    ['TEFAQ', 'https://yaounde.ifc-tests-examens.com/examens-session/6-test-d-evaluation-de-franais-adapt-au-qubec'],
+    ['TEFAQb', 'https://yaounde.ifc-tests-examens.com/examens-session/6-test-d-evaluation-de-franais-adapt-au-qubec'],
     
     ['TEF-Complet', 'https://yaounde.ifc-tests-examens.com/examens-session/11-test-d-valuation-de-franais-complet']
 ]
