@@ -58,7 +58,7 @@ def home():
     return "Le serveur est en marche!"
 
 if __name__ == '__main__':
-    # Démarrer la surveillance dans un thread au lancement
+    # Démarrer la surveillance dans un thread au lancemen
     thread = threading.Thread(target=surveiller_pages)
     thread.daemon = True
     thread.start()
