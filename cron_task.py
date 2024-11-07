@@ -37,21 +37,28 @@ def obtenir_page(url):
 
 # Fonction pour surveiller les pages et détecter les changements
 def surveiller_pages():
-    i=0
     while True:
-        i=i+1
-        print(f'threads numero {i}')
         for nom_examen, ville, url in url_centre:
             soup = obtenir_page(url)
             contenu = soup.text
             hash_actuel = hashlib.md5(contenu.encode('utf-8')).hexdigest()
-            envoyer_notification(f"scrapping")
             if derniers_hashes[url] is None:
                 derniers_hashes[url] = hash_actuel
                 envoyer_notification(f"Surveillance activée pour {nom_examen} à {ville}.")
             elif hash_actuel != derniers_hashes[url]:
-                envoyer_notification(f"Changement détecté pour {nom_examen} à {ville} : {url}")
+                envoyer_notification(f"😊Changement détecté")
                 derniers_hashes[url] = hash_actuel
+                derniers_hashes[url] = hash_actuel  # Mettre à jour le hash
+                aucun_examen = soup.find('span', class_='btn btn-danger')
+                aucune_session = soup.find("span", class_="text text-danger")
+                if aucun_examen:
+                    message = f"{nom_examen} à {ville} : {aucun_examen.text.strip()}"
+                elif titre.text == '(Cette session est complète)':
+                    message = f"💡{nom_examen} à {ville} : {titre.text.strip()}"
+                    envoyer_notification(message)
+                else:
+                    message = f"🍀🎉{nom_examen} à {ville} : un examen programmer : {url}"
+                    envoyer_notification(message)
 
         time.sleep(60)  # Attendre 1 minute avant de revérifie
 
