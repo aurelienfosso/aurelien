@@ -47,13 +47,12 @@ def surveiller_pages():
                 envoyer_notification(f"Surveillance activée pour {nom_examen} à {ville}.")
             elif hash_actuel != derniers_hashes[url]:
                 envoyer_notification(f"😊Changement détecté")
-                derniers_hashes[url] = hash_actuel
                 derniers_hashes[url] = hash_actuel  # Mettre à jour le hash
                 aucun_examen = soup.find('span', class_='btn btn-danger')
                 aucune_session = soup.find("span", class_="text text-danger")
                 if aucun_examen:
                     message = f"{nom_examen} à {ville} : {aucun_examen.text.strip()}"
-                elif aucune_session.text == '(Cette session est complète)':
+                elif aucune_session and aucune_session.text == '(Cette session est complète)':
                     message = f"💡Fausse alert: {nom_examen} à {ville} : {aucune_session.text.strip()}"
                     envoyer_notification(message)
                 else:
