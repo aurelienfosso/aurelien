@@ -53,7 +53,7 @@ def surveiller_pages():
                 envoyer_notification(f"Changement détecté pour {nom_examen} à {ville} : {url}")
                 derniers_hashes[url] = hash_actuel
 
-        time.sleep(60)  # Attendre 1 minute avant de revérifier
+        time.sleep(60)  # Attendre 1 minute avant de revérifie
 
 
 @app.route('/')
