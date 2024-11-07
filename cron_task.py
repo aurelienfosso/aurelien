@@ -34,11 +34,12 @@ def obtenir_page(url):
     payload['url'] = url
     response = requests.get('https://api.scraperapi.com/', params=payload)
     return BeautifulSoup(response.text, 'html.parser')
-
+i=0
 # Fonction pour surveiller les pages et détecter les changements
 def surveiller_pages():
     while True:
-        print("encore")
+        i=i+1
+        print('threads numero' + i)
         for nom_examen, ville, url in url_centre:
             soup = obtenir_page(url)
             contenu = soup.text
