@@ -38,6 +38,7 @@ def obtenir_page(url):
 # Fonction pour surveiller les pages et détecter les changements
 def surveiller_pages():
     while True:
+        envoyer_notification("check")
         for nom_examen, ville, url in url_centre:
             soup = obtenir_page(url)
             contenu = soup.text
