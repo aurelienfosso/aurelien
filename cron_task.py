@@ -28,11 +28,13 @@ def envoyer_notification(message):
     payload = {'chat_id': CHAT_ID, 'text': message, 'parse_mode': 'HTML'}
     requests.post(url_telegram, data=payload)
 
+
 # Fonction pour calculer le hash de la page
 def obtenir_page(url):
     payload = payload_template.copy()
     payload['url'] = url
     response = requests.get('https://api.scraperapi.com/', params=payload)
+    #print(BeautifulSoup(response.text, 'html.parser'))
     return BeautifulSoup(response.text, 'html.parser')
 
 # Fonction pour surveiller les pages et détecter les changements
@@ -41,14 +43,15 @@ def surveiller_pages():
         envoyer_notification("check")
         for nom_examen, ville, url in url_centre:
             soup = obtenir_page(url)
+            print(soup.text.strip())
             contenu = soup.text
             hash_actuel = hashlib.md5(contenu.encode('utf-8')).hexdigest()
             if derniers_hashes[url] is None:
-                derniers_hashes[url] = hash_actuel
+                derniers_hashes[url] = contenu
                 envoyer_notification(f"Surveillance activée pour {nom_examen} à {ville}.")
-            elif hash_actuel != derniers_hashes[url]:
+            elif contenu != derniers_hashes[url]:
                 envoyer_notification(f"😊Changement détecté")
-                derniers_hashes[url] = hash_actuel  # Mettre à jour le hash
+                derniers_hashes[url] = contenu  # Mettre à jour le hash
                 aucun_examen = soup.find('span', class_='btn btn-danger')
                 aucune_session = soup.find("span", class_="text text-danger")
                 if aucun_examen:
@@ -59,7 +62,7 @@ def surveiller_pages():
                 else:
                     message = f"🍀🎉{nom_examen} à {ville} : un examen programmer : {url}"
                     envoyer_notification(message)
-
+            #print(f"{contenu} - {derniers_hashes[url]}")
         time.sleep(60)  # Attendre 1 minute avant de revérifie
 
 
